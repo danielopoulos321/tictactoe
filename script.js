@@ -78,24 +78,40 @@ const gameController = (() => {
     };
 
     const playRound = (index) => {
-        Gameboard.placeSign(index, activePlayer.sign);
-        Gameboard.checkWin(activePlayer.sign);
-        switchTurn();
+        let success = Gameboard.placeSign(index, activePlayer.sign);
+        if (success) {
+            Gameboard.checkWin(activePlayer.sign);
+            return true;
+        };
     }
 
     const getTurnCount = () => {
         return turnCount;
     }
 
+    const getActivePlayer = () => {
+        return activePlayer;
+    }
+
     //Finish up ending the game on 9 turns and checking result
 
-    return {playRound, getTurnCount};
+    return {playRound, getTurnCount, getActivePlayer, switchTurn};
 })();    
 
 
 //Display Controller Object(module)
     //Used to update the UI
 const displayController = (() => {
+    const htmlBoard = document.querySelectorAll('button.square');
 
+    for (let i = 0; i < htmlBoard.length; i++){
+        htmlBoard[i].addEventListener('click', () => {
+            let success = gameController.playRound(i);
+            if (success) {
+                htmlBoard[i].textContent = gameController.getActivePlayer().sign;
+            gameController.switchTurn();
+            };
+        })
+    }
 
 })();
