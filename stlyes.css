@@ -1,8 +1,22 @@
+body{
+    background-color: aquamarine;
+    margin: auto;
+}
+
 .game-ctn{
     display: grid;
-    grid-template: 50px 50px 50px / 50px 50px 50px;
+    width: 300px;
+    height: 300px;
+    grid-template: 100px 100px 100px / 100px 100px 100px;
 }
 
 .square{
     border: 2px solid black;
+}
+
+.center{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

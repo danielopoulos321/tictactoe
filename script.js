@@ -89,13 +89,13 @@ const gameController = (() => {
         return turnCount;
     }
 
-    const getActivePlayer = () => {
-        return activePlayer;
+    const getActivePlayerSign = () => {
+        return activePlayer.sign;
     }
 
     //Finish up ending the game on 9 turns and checking result
 
-    return {playRound, getTurnCount, getActivePlayer, switchTurn};
+    return {playRound, getTurnCount, getActivePlayerSign, switchTurn};
 })();    
 
 
@@ -108,7 +108,7 @@ const displayController = (() => {
         htmlBoard[i].addEventListener('click', () => {
             let success = gameController.playRound(i);
             if (success) {
-                htmlBoard[i].textContent = gameController.getActivePlayer().sign;
+                htmlBoard[i].textContent = gameController.getActivePlayerSign();
             gameController.switchTurn();
             };
         })
