@@ -4,30 +4,37 @@ body{
 }
 
 .game-ctn{
+    border: 3px solid black;
     display: grid;
-    width: 300px;
-    height: 300px;
-    grid-template: 100px 100px 100px / 100px 100px 100px;
+    width: 330px;
+    height: 330px;
+    grid-template: 110px 110px 110px / 110px 110px 110px;
 }
 
 .square{
     background-color:azure;
-    border: 2px solid black;
+    border: 1px solid black;
     font-size: 5em;
+    width: 110px;
+    height: 110px;
 }
 
 .header{
-    margin-top: 2em;
-    margin-bottom: 4em;
     padding-right: 1em;
-    padding-left: 1em;
-    border-radius: 1.5em;
+    padding: .5em;
+    font-size: 4em;
     border: 2px solid black;
-    background-color: blueviolet;
+    background-color: rgb(204, 170, 237);
+    display: flex;
+    justify-content: center;
+}
+.gameInfo{
+    display: flex;
+    justify-content: center;
+    font-size: 3em;
 }
 
 .center{
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
