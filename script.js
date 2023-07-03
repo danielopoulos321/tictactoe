@@ -40,14 +40,15 @@ const Gameboard = (() => {
         }).filter(index => index !== null);
 
         //Compares playerFields array with winConditions array
-        let result = 'none';
+        let result = false;
         for (let i = 0; i < winConditions.length; i++){
             //Checks if every every number in the playerFields array is present in the current winConditions iteration
             if(winConditions[i].every(num => playerFields.includes(num))){
-                result = 'won';
+                result = true;
             }
         }
         console.log(result);
+        return result;
     }
 
     return {placeSign, resetBoard, checkWin};
@@ -80,7 +81,8 @@ const gameController = (() => {
     const playRound = (index) => {
         let success = Gameboard.placeSign(index, activePlayer.sign);
         if (success) {
-            Gameboard.checkWin(activePlayer.sign);
+            let won = Gameboard.checkWin(activePlayer.sign);
+            endGame(won);
             return true;
         };
     }
@@ -94,6 +96,11 @@ const gameController = (() => {
     }
 
     //Finish up ending the game on 9 turns and checking result
+    const endGame = (won) => {
+        if (turnCount == 9 || won == true){
+            displayController.disableButton();
+        }
+    }
 
     return {playRound, getTurnCount, getActivePlayerSign, switchTurn};
 })();    
@@ -103,7 +110,6 @@ const gameController = (() => {
     //Used to update the UI
 const displayController = (() => {
     const htmlBoard = document.querySelectorAll('button.square');
-
     for (let i = 0; i < htmlBoard.length; i++){
         htmlBoard[i].addEventListener('click', () => {
             let success = gameController.playRound(i);
@@ -114,4 +120,11 @@ const displayController = (() => {
         })
     }
 
+    //Function to disable the buttons
+    const disableButton = () => {
+        htmlBoard.forEach(button => {
+            button.disabled = true;
+        });
+    }
+    return {disableButton};
 })();

@@ -12,11 +12,22 @@ body{
 
 .square{
     border: 2px solid black;
+    font-size: 5em;
+}
+
+.header{
+    margin-bottom: 4em;
+    padding-right: 1em;
+    padding-left: 1em;
+    border-radius: 1.5em;
+    border: 2px solid black;
+    background-color: blueviolet;
 }
 
 .center{
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
