@@ -47,7 +47,6 @@ const Gameboard = (() => {
                 result = true;
             }
         }
-        console.log(result);
         return result;
     }
 
@@ -62,17 +61,19 @@ const Player = (name, sign) => {
 
 //Game Flow Module
 const gameController = (() => {
-    const player1 = Player(1, 'x');
-    const player2 = Player(2,'o');
+    const player1 = Player(1, 'X');
+    const player2 = Player(2,'O');
     
     let activePlayer = player1;
     let turnCount = 0;
 
     const switchTurn = () => {
         if(activePlayer == player1){
+            displayController.setGameInfo(`Player O's Turn`);
             activePlayer = player2;
             turnCount++;
         } else {
+            displayController.setGameInfo(`Player X's Turn`);
             activePlayer = player1;
             turnCount++;
         }
@@ -81,8 +82,7 @@ const gameController = (() => {
     const playRound = (index) => {
         let success = Gameboard.placeSign(index, activePlayer.sign);
         if (success) {
-            let won = Gameboard.checkWin(activePlayer.sign);
-            endGame(won);
+            endGame(Gameboard.checkWin(activePlayer.sign));
             return true;
         };
     }
@@ -97,8 +97,14 @@ const gameController = (() => {
 
     //Finish up ending the game on 9 turns and checking result
     const endGame = (won) => {
-        if (turnCount == 9 || won == true){
+        if (won == true){
             displayController.disableButton();
+            displayController.setGameInfo(`Player ${activePlayer.sign} Won!`);
+            return
+        } else if (turnCount == 8) {
+            displayController.setGameInfo(`Tie!`);
+        } else {
+            switchTurn();
         }
     }
 
@@ -112,10 +118,10 @@ const displayController = (() => {
     const htmlBoard = document.querySelectorAll('button.square');
     for (let i = 0; i < htmlBoard.length; i++){
         htmlBoard[i].addEventListener('click', () => {
+            let sign = gameController.getActivePlayerSign();
             let success = gameController.playRound(i);
             if (success) {
-                htmlBoard[i].textContent = gameController.getActivePlayerSign();
-            gameController.switchTurn();
+                htmlBoard[i].textContent = sign;
             };
         })
     }
@@ -126,5 +132,13 @@ const displayController = (() => {
             button.disabled = true;
         });
     }
-    return {disableButton};
+
+    //Make Game Info Accessible
+    const gameInfo = document.querySelector('.gameInfo h2');
+    const setGameInfo = (newText) => {
+        gameInfo.textContent = newText;
+    }
+
+
+    return {disableButton, setGameInfo};
 })();
