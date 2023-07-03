@@ -16,6 +16,7 @@ body{
 }
 
 .header{
+    margin-top: 2em;
     margin-bottom: 4em;
     padding-right: 1em;
     padding-left: 1em;
@@ -28,6 +29,5 @@ body{
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
