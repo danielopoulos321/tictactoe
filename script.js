@@ -87,8 +87,9 @@ const gameController = (() => {
         };
     }
 
-    const getTurnCount = () => {
-        return turnCount;
+    const resetMatch = () => {
+        activePlayer = player1;
+        turnCount = 0;
     }
 
     const getActivePlayerSign = () => {
@@ -108,7 +109,7 @@ const gameController = (() => {
         }
     }
 
-    return {playRound, getTurnCount, getActivePlayerSign, switchTurn};
+    return {playRound, resetMatch, getActivePlayerSign, switchTurn};
 })();    
 
 
@@ -139,6 +140,14 @@ const displayController = (() => {
         gameInfo.textContent = newText;
     }
 
+    //Reset Game
+    const resetButton = document.querySelector('button.restart');
+    resetButton.addEventListener('click', () => {
+        Gameboard.resetBoard();
+        gameController.resetMatch();
+        htmlBoard.forEach(button => button.textContent = '');
+        gameInfo.textContent = `Player X's Turn`;
+    })
 
     return {disableButton, setGameInfo};
 })();
