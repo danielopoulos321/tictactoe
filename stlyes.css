@@ -1,19 +1,23 @@
 body{
-    background-color: aquamarine;
+    background-color: #293462;
     margin: auto;
 }
 
 .game-ctn{
-    border: 3px solid black;
+    border: 3px solid #D61C4E;
+    border-radius: 5px;
     display: grid;
     width: 330px;
     height: 330px;
     grid-template: 110px 110px 110px / 110px 110px 110px;
+    box-shadow: 0 0 10px 5px rgba(214, 28, 78, 0.5);
 }
 
 .square{
-    background-color:azure;
-    border: 1px solid black;
+    background-color:#d61c4e2e;
+    border: 1px solid #D61C4E;
+    color: #1cd6ce;
+    text-shadow: 0px 0px 8px rgba(28, 214, 206, 0.7);
     font-size: 50px;
     padding: 0;
     box-sizing: border-box;
@@ -22,15 +26,20 @@ body{
 }
 
 .header{
+    margin: auto;
+    max-width: 1200px;
     padding-right: 1em;
     padding: .5em;
     font-size: 4em;
-    border: 2px solid black;
-    background-color: rgb(204, 170, 237);
+    color: #293462;
+    border-radius: 0 0 25px 25px / 0 0 25px 25px;
+    box-shadow: 0 0 10px 5px rgba(254, 219, 57, 0.5);
+    background-color: #FEDB39;
     display: flex;
     justify-content: center;
 }
 .gameInfo{
+    color: #1cd6ce;
     display: flex;
     justify-content: center;
     font-size: 3em;
@@ -42,6 +51,21 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.restart{
+    margin: 2em;
+    font-size: 2em;
+    padding: .5em 1em;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 10px 5px rgba(254, 219, 57, 0.5);
+    background-color: #FEDB39;
+}
+
+.restart:active{
+    box-shadow: 0 0 10px 5px rgba(254, 219, 57, 0.5);
+    background-color: rgb(184, 158, 41);
 }
 
 /* Css Reset  */
