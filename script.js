@@ -145,7 +145,10 @@ const displayController = (() => {
     resetButton.addEventListener('click', () => {
         Gameboard.resetBoard();
         gameController.resetMatch();
-        htmlBoard.forEach(button => button.textContent = '');
+        htmlBoard.forEach(button => {
+            button.textContent = '';
+            button.disabled = false;
+        });
         gameInfo.textContent = `Player X's Turn`;
     })
 
