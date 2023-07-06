@@ -58,16 +58,16 @@ const Gameboard = (() => {
     return {placeSign, resetBoard, checkWin, getBoard};
 })();
 
-//Player Object Module
+//Player Object Factory
 const Player = (name, sign) => {
     return {name, sign};
 };
 
 
-//Game Flow Module
-const gameController = (() => {
+//Game Flow Factory
+const gameController = (playerName) => {
     const player1 = Player(1, 'X');
-    const player2 = Player('AI','O');
+    const player2 = Player(playerName,'O');
     
     let activePlayer = player1;
     let turnCount = 0;
@@ -125,16 +125,34 @@ const gameController = (() => {
     }
 
     return {playRound, resetMatch, getActivePlayerSign, switchTurn};
-})();    
+};    
 
 
 //Display Controller Object(module)
 const displayController = (() => {
+    const pvp = document.getElementById('pvp');
+    const pvai = document.getElementById('pvai');
+    const gameChoice = document.getElementById('gameChoice');
+    const gameDisplay = document.getElementById('gameDisplay');
+    let game;
+
+    pvp.addEventListener('click', () => {
+        game = gameController('O');
+        gameDisplay.removeAttribute('hidden');
+        gameChoice.setAttribute('hidden', '');
+    });
+
+    pvai.addEventListener('click', () => {
+        game = gameController('AI');
+        gameDisplay.removeAttribute('hidden');
+        gameChoice.setAttribute('hidden', '');
+    });
+
     const htmlBoard = document.querySelectorAll('button.square');
     for (let i = 0; i < htmlBoard.length; i++){
         htmlBoard[i].addEventListener('click', () => {
-            let sign = gameController.getActivePlayerSign();
-            let success = gameController.playRound(i);
+            let sign = game.getActivePlayerSign();
+            let success = game.playRound(i);
             if (success) {
                 htmlBoard[i].textContent = sign;
             };
@@ -161,10 +179,10 @@ const displayController = (() => {
     }
 
     //Reset Game
-    const resetButton = document.querySelector('button.restart');
+    const resetButton = document.querySelector('button#restart');
     resetButton.addEventListener('click', () => {
         Gameboard.resetBoard();
-        gameController.resetMatch();
+        game.resetMatch();
         htmlBoard.forEach(button => {
             button.textContent = '';
             button.disabled = false;
