@@ -5,6 +5,11 @@ const Gameboard = (() => {
                    '','','',
                    '','',''];
 
+    //Function to read only board 
+    const getBoard = () => {
+        return [...board];
+    };              
+
     //Private list of win conditions
     const winConditions = [
         [0,1,2],
@@ -50,7 +55,7 @@ const Gameboard = (() => {
         return result;
     }
 
-    return {placeSign, resetBoard, checkWin};
+    return {placeSign, resetBoard, checkWin, getBoard};
 })();
 
 //Player Object Module
@@ -62,7 +67,7 @@ const Player = (name, sign) => {
 //Game Flow Module
 const gameController = (() => {
     const player1 = Player(1, 'X');
-    const player2 = Player(2,'O');
+    const player2 = Player('AI','O');
     
     let activePlayer = player1;
     let turnCount = 0;
@@ -72,6 +77,12 @@ const gameController = (() => {
             displayController.setGameInfo(`Player O's Turn`);
             activePlayer = player2;
             turnCount++;
+            //If player name is AI simulate a click
+            if(player2.name == 'AI'){
+                setTimeout(() => {
+                    AI.aiMove();
+                  }, 1000);
+            }
         } else {
             displayController.setGameInfo(`Player X's Turn`);
             activePlayer = player1;
@@ -114,7 +125,6 @@ const gameController = (() => {
 
 
 //Display Controller Object(module)
-    //Used to update the UI
 const displayController = (() => {
     const htmlBoard = document.querySelectorAll('button.square');
     for (let i = 0; i < htmlBoard.length; i++){
@@ -152,5 +162,31 @@ const displayController = (() => {
         gameInfo.textContent = `Player X's Turn`;
     })
 
-    return {disableButton, setGameInfo};
+    return {disableButton, setGameInfo, htmlBoard};
+})();
+
+//Artifical Player Module 
+const AI = (() => {
+    //Attempt to play a random spot in board until return true
+    const attemptMove = () => {
+        const tempBoard = Gameboard.getBoard();
+        let success = false;
+        let randomSpot;
+
+        while(!success){
+            randomSpot =  Math.floor(Math.random() * 9);
+            if (tempBoard[randomSpot] == ''){
+                success = true;
+            }
+        }
+        return randomSpot;
+    }
+
+
+    const aiMove = () => {
+        let validMove = attemptMove();
+        displayController.htmlBoard[validMove].click();
+    }
+
+    return {aiMove};
 })();
