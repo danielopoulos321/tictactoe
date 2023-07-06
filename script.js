@@ -66,7 +66,7 @@ const Player = (name, sign) => {
 
 //Game Flow Factory
 const gameController = (playerName) => {
-    const player1 = Player(1, 'X');
+    const player1 = Player('X', 'X');
     const player2 = Player(playerName,'O');
     
     let activePlayer = player1;
@@ -115,7 +115,7 @@ const gameController = (playerName) => {
     const endGame = (won) => {
         if (won == true){
             displayController.disableButton();
-            displayController.setGameInfo(`Player ${activePlayer.sign} Won!`);
+            displayController.setGameInfo(`${activePlayer.name} Won!`);
             return
         } else if (turnCount == 8) {
             displayController.setGameInfo(`Tie!`);
@@ -187,7 +187,10 @@ const displayController = (() => {
             button.textContent = '';
             button.disabled = false;
         });
+        gameChoice.removeAttribute('hidden');
+        gameDisplay.setAttribute('hidden', '');
         gameInfo.textContent = `Player X's Turn`;
+        game = null;
     })
 
     return {disableButton, enableButton, setGameInfo, htmlBoard};

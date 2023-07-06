@@ -69,12 +69,14 @@ body{
 
 #restart{
     margin: 2em;
+    width: fit-content;
 }
 
 .btn{
     margin-right: .5em;
     margin-left: .5em;
     font-size: 2em;
+    width: 150px;
     font-family: 'Rowdies', cursive;
     color: #293462;
     text-shadow: 0px 0px 8px #2934629b;
