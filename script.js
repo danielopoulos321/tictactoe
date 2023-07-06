@@ -79,9 +79,13 @@ const gameController = (() => {
             turnCount++;
             //If player name is AI simulate a click
             if(player2.name == 'AI'){
+                displayController.setGameInfo(`AI's Turn`);
+                displayController.disableButton();
                 setTimeout(() => {
+                    displayController.enableButton();
                     AI.aiMove();
                   }, 1000);
+                  
             }
         } else {
             displayController.setGameInfo(`Player X's Turn`);
@@ -144,6 +148,12 @@ const displayController = (() => {
         });
     }
 
+    const enableButton = () => {
+        htmlBoard.forEach(button => {
+            button.disabled = false;
+        });
+    }
+
     //Make Game Info Accessible
     const gameInfo = document.querySelector('.gameInfo h2');
     const setGameInfo = (newText) => {
@@ -162,7 +172,7 @@ const displayController = (() => {
         gameInfo.textContent = `Player X's Turn`;
     })
 
-    return {disableButton, setGameInfo, htmlBoard};
+    return {disableButton, enableButton, setGameInfo, htmlBoard};
 })();
 
 //Artifical Player Module 
